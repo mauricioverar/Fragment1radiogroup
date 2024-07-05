@@ -5,21 +5,24 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-
 import com.example.fragment1.databinding.FragmentBlankBinding;
 
-
 public class BlankFragment extends Fragment {
+    public interface OnOptionSelectedListener {
+        void onOptionSelected(boolean isYesSelected);
+    }
 
     private FragmentBlankBinding mBinding;
 
+    private OnOptionSelectedListener listener;
 
-    // buscar o llamar la clase binding
+    public void setOnOptionSelectedListener(OnOptionSelectedListener listener) {this.listener = listener;
+    }
+
 
     public BlankFragment() {
         // Required empty public constructor
@@ -50,19 +53,25 @@ public class BlankFragment extends Fragment {
 
         mBinding.radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int i) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                int index = mBinding.radiogroup.indexOfChild(mBinding.radiogroup.findViewById(i));
+                int index = mBinding.radiogroup.indexOfChild(mBinding.radiogroup.findViewById(checkedId));
 
                 switch (index){
 
 
                     case 0:
-                        mBinding.textView.setText("Si lo conozco");
+                        mBinding.tvPregunta.setText(R.string.si);
+                        if (listener != null) {
+                            listener.onOptionSelected(true);
+                        }
                         break;
 
                     case 1:
-                        mBinding.textView.setText("No lo conozco");
+                        mBinding.tvPregunta.setText(R.string.no);
+                        if (listener != null) {
+                            listener.onOptionSelected(false);
+                        }
                         break;
 
                     default:

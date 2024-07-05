@@ -8,4 +8,8 @@
     <string name="res">SI</string>
 
     <string name="res2">NO</string>
+    <string name="no">No lo conozco</string>
+    <string name="si">Si lo conozco</string>
+
+
 </resources>

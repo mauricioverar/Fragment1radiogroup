@@ -1,23 +1,38 @@
 package com.example.fragment1;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.fragment1.databinding.FragmentBlankBinding;
+public class MainActivity extends AppCompatActivity implements BlankFragment.OnOptionSelectedListener {
 
-public class MainActivity extends AppCompatActivity {
-
-
+    private ImageView ivMario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ivMario = findViewById(R.id.ivMario);
 
+        BlankFragment fragment = new BlankFragment();
+        fragment.setOnOptionSelectedListener(this);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.fragmentContainerView, fragment);
+        fragmentTransaction.commit();
+
+    }
+
+    @Override
+    public void onOptionSelected(boolean isYesSelected) {
+        if (isYesSelected) {
+            ivMario.setImageResource(R.drawable.luigi);
+        } else {
+            ivMario.setImageResource(R.drawable.mariobross);
+        }
     }
 }
